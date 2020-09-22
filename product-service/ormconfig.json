@@ -1,0 +1,20 @@
+[
+    {
+        "name": "default",
+        "type": "postgres",
+        "host": "localhost",
+        "port": 5432,
+        "username": "postgres",
+        "password": "reis",
+        "database": "ecommerce-product",
+        "synchronize": false,
+        "migrationsTableName": "migrations_typeorm",
+        "entities": [
+            "dist/entities/*{ .ts,.js}"
+        ],
+        "migrations": [
+            "dist/database/migrations/*{.ts,.js}"
+        ],
+        "migrationsRun": true
+    }
+]
