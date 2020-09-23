@@ -14,12 +14,13 @@ export class UsersModule {
 
     constructor(private connection: Connection) {
         const repository = this.connection.getRepository(User);
-        const admin = repository.create({
-            username: 'admin',
-            password: 'reis',
-            admin: true
+        repository.find().then(users => {
+            if (!users || users.length < 1) {
+                const user = repository.save({ username: 'admin', password: 'reis', admin: true });
+                // repository.save({ username: 'john', password: 'changeme', admin: false });
+                // repository.save({ username: 'chris', password: 'secret', admin: false });
+                // repository.save({ username: 'maria', password: 'guess', admin: false });
+            }
         });
-        console.log('ID: ', admin.id);
     }
-
 }

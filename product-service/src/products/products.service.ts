@@ -3,6 +3,7 @@ import { Product } from 'src/entities/product';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FactoriesService } from 'src/factories/factories.service';
+import { Factory } from 'src/entities/factory';
 
 @Injectable()
 export class ProductsService {
@@ -19,8 +20,16 @@ export class ProductsService {
             if (product.factory.id) {
                 product.factoryId = product.factory.id;
             } else if (product.factory.name) {
+                let factory = undefined;
+                
                 const factories = await this.factoriesService.getList({ name: product.factory.name });
-                product.factoryId = factories[0].id;
+
+                if (factories.length < 1) {
+                    factory = await this.factoriesService.save(product.factory);
+                } else {
+                    factory = factories[0]
+                }
+                product.factoryId = factory.id;
             }
         }
 

@@ -8,11 +8,13 @@ import { FactoriesService } from './factories/factories.service';
 import { FactoriesController } from './factories/factories.controller';
 import { Factory } from './entities/factory';
 import { Product } from './entities/product';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
     imports: [
         TypeOrmModule.forRoot(),
-        TypeOrmModule.forFeature([ Factory, Product ])
+        TypeOrmModule.forFeature([ Factory, Product ]),
+        AuthModule
     ],
     controllers: [ ProductsController, FactoriesController ],
     providers: [ ProductsService, FactoriesService ],

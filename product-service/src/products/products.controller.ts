@@ -1,4 +1,5 @@
-import { Controller, Get, Post, Body, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards, Request, HttpException, HttpStatus } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 
 import { Product } from 'src/entities/product';
 import { ProductsService } from './products.service';
@@ -10,12 +11,18 @@ export class ProductsController {
 
     @Get()
     public async index(@Query() query: any) {
-        return await this.productsService.getList(query)
+        return await this.productsService.getList(query);
     }
 
     @Post()
-    public async create(@Body() product: Product) {
-        return await this.productsService.save(product)
+    @UseGuards(AuthGuard('jwt'))
+    public async create(@Request() request: any, @Body() product: Product) {
+        const { user } = request;
+        if (user.admin) {
+            return await this.productsService.save(product);
+        } else {
+            throw new HttpException("User must be admin to save a new Product!", HttpStatus.FORBIDDEN);
+        }
     }
 
 }

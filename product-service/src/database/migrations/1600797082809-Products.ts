@@ -17,15 +17,13 @@ export class Products1600797082809 implements MigrationInterface {
         }));
 
         await queryRunner.createForeignKey(this.tableName, new TableForeignKey({
-            columnNames: ['factory_id'],
-            referencedColumnNames: ['id'],
-            referencedTableName: 'factories'
+            columnNames: ['factory_id'], referencedColumnNames: ['id'], referencedTableName: 'factories'
         }));
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
         const table = await queryRunner.getTable("factories");
-        const foreignKey = table.foreignKeys.find(fk => fk.columnNames.indexOf("factory_id") !== -1);
+        const foreignKey = table.foreignKeys.find(fk => fk.columnNames.indexOf("factory_id") > -1);
         await queryRunner.dropForeignKey('factories', foreignKey);
         await queryRunner.dropColumn('factories', 'factory_id');
         await queryRunner.dropTable(this.tableName);
