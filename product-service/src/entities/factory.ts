@@ -1,4 +1,4 @@
-import { Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'factories' })
 export class Factory {
@@ -6,7 +6,7 @@ export class Factory {
     @PrimaryGeneratedColumn()
     public id!: number;
 
-    @PrimaryColumn()
+    @Column()
     public name!: string;
 
 }

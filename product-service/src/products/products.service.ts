@@ -14,6 +14,10 @@ export class ProductsService {
         private readonly factoriesService: FactoriesService
     ) {}
 
+    public async getById(id: number): Promise<Product> {
+        return (await this.productsRepository.findByIds([ id ]))[0];
+    }
+
     public async save(product: Product): Promise<Product> {
         if (!product.factoryId && product.factory) {
             if (product.factory.id) {
@@ -38,6 +42,7 @@ export class ProductsService {
 
     public async getList(filter?: any): Promise<Product[]> {
         return await this.productsRepository.find({
+            relations: ['factory'],
             where: { ...filter }
         });
     }

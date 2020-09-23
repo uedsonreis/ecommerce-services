@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Query, UseGuards, Request, HttpException, HttpStatus, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Query, UseGuards, Request, HttpException, HttpStatus, Delete, Param } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 
 import { Product } from 'src/entities/product';
@@ -12,6 +12,12 @@ export class ProductsController {
     @Get()
     public async index(@Query() query: any) {
         return await this.productsService.getList(query);
+    }
+
+    @Get(':id')
+    public async get(@Param() params: any) {
+        const productId = Number(params.id);
+        return await this.productsService.getById(productId);
     }
 
     @Post()

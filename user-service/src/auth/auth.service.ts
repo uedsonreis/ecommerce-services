@@ -21,7 +21,7 @@ export class AuthService {
     }
 
     public login(user: User): string {
-        const payload = { username: user.username, sub: user.admin };
+        const { password, ...payload } = user;
         return this.jwtService.sign(payload);
     }
 
