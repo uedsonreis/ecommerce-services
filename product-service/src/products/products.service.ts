@@ -15,7 +15,6 @@ export class ProductsService {
     ) {}
 
     public async save(product: Product): Promise<Product> {
-
         if (!product.factoryId && product.factory) {
             if (product.factory.id) {
                 product.factoryId = product.factory.id;
@@ -41,6 +40,10 @@ export class ProductsService {
         return await this.productsRepository.find({
             where: { ...filter }
         });
+    }
+
+    public async delete(product: Product): Promise<void> {
+        await this.productsRepository.delete(product);
     }
 
 }
