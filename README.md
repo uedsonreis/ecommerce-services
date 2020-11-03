@@ -1,2 +1,2 @@
 # ecommerce-services
-Project to study microservices.
+Project to study about microservices.
